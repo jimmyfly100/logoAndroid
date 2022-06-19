@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.salieri.drawengine.CanvasView
+        android:id="@+id/canvas_view"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:background="#44000000"/>
+
+    <EditText
+        android:id="@+id/code_tv"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/canvas_view"
+        android:textColor="@color/black"
+        android:textSize="14dp"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Hello World!"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
