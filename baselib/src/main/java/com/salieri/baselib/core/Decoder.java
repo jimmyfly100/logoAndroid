@@ -275,7 +275,7 @@ public class Decoder {
     //数字string或变量string都解析成数字
     private NUM parseNumber(String text) {
         try {
-            float f = Float.parseFloat(text);
+            double f = Double.parseDouble(text);
             return new NUM(f);
         } catch (Exception e) {
             if (CoreManager.getInstance().isVariable(field, text)) {

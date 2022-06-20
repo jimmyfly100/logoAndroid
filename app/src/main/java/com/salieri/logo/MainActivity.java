@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         canvasView = findViewById(R.id.canvas_view);
         codeTv = findViewById(R.id.code_tv);
-        String text = "REPEAT 6[BK 300 FD 400 RT 60]";
+        String text = "FUNC Polygon length num [REPEAT num[FD length RT 360/num]] Polygon 100 8";
         String text2 = "BK 100 FUNC AAAAA A B C [FD A RT B BK C] FUNC SALIERI A B C [REPEAT C[FD A RT B]] A=1 B=0 REPEAT 3 [SALIERI A B+1 360 FD 200] AAAAA A + 100 B + 60 500";
-        codeTv.setText(text2);
+        codeTv.setText(text);
 
 //        String codeStr = "REPEAT C[FD A RT B]";
 //        List<NAME> paramList = new LinkedList<>();
