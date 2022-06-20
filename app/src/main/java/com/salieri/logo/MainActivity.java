@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         codeTv = findViewById(R.id.code_tv);
         String text = "FUNC Polygon length num [REPEAT num[FD length RT 360/num]] Polygon 100 8";
         String text2 = "BK 100 FUNC AAAAA A B C [FD A RT B BK C] FUNC SALIERI A B C [REPEAT C[FD A RT B]] A=1 B=0 REPEAT 3 [SALIERI A B+1 360 FD 200] AAAAA A + 100 B + 60 500";
-        codeTv.setText(text);
+        codeTv.setText(text2);
 
 //        String codeStr = "REPEAT C[FD A RT B]";
 //        List<NAME> paramList = new LinkedList<>();

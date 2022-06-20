@@ -13,15 +13,20 @@ public class AndroidEngine implements ILogoEngine {
     private double angle = 0;
     private ICanvas canvas = new DefaultCanvas();
 
-    public AndroidEngine(ICanvas canvas) {
-        this.canvas = canvas;
-    }
+//    public AndroidEngine(ICanvas canvas) {
+//        this.canvas = canvas;
+//    }
 
     public AndroidEngine(float x, float y, float angle, ICanvas canvas) {
         this.x = x;
         this.y = y;
         this.angle = angle;
         this.canvas = canvas;
+        drawTurtle();
+    }
+
+    public void drawTurtle() {
+        canvas.drawTurtle((float) x, (float) y, (float) angle);
     }
 
     @Override

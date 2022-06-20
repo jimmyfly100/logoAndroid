@@ -8,4 +8,5 @@ public interface ILogoEngine {
     void RT(NUM value);
     void LT(NUM value);
     void error(String msg);
+    void drawTurtle();
 }

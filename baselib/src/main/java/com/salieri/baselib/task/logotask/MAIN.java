@@ -1,6 +1,7 @@
 package com.salieri.baselib.task.logotask;
 
 import com.salieri.baselib.core.CoreManager;
+import com.salieri.baselib.core.EngineHolder;
 import com.salieri.baselib.task.TaskSet;
 import com.salieri.baselib.type.CODE;
 
@@ -19,5 +20,6 @@ public class MAIN extends TaskSet {
     public void run() {
 //        CoreManager.getInstance().clearMainVar();
         super.run();
+        EngineHolder.getEngine().drawTurtle();
     }
 }

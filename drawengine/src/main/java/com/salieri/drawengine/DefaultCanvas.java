@@ -5,4 +5,9 @@ public class DefaultCanvas implements ICanvas{
     public void drawLine(float fromX, float fromY, float toX, float toY) {
 
     }
+
+    @Override
+    public void drawTurtle(float x, float y, float angle) {
+
+    }
 }

@@ -41,6 +41,11 @@ public class DefaultEngine implements ILogoEngine {
         ToastUtil.show(msg);
     }
 
+    @Override
+    public void drawTurtle() {
+
+    }
+
     private void print(String func) {
         Log.d("LogoEngine", "Func " + func + " is called. Current state is: x = " + x + " y = " + y + " angle = " + angle);
     }
