@@ -1,7 +1,5 @@
 package com.salieri.baselib.task.logotask;
 
-import android.text.TextUtils;
-
 import com.salieri.baselib.task.LogoTask;
 import com.salieri.baselib.core.CoreManager;
 import com.salieri.baselib.task.TaskSet;
@@ -35,16 +33,17 @@ public class FUNC implements LogoTask {
         }
         content.code = new CODE(insertCode + content.code.value);
         new TaskSet(content.code, name).run();
-        CoreManager.getInstance().clearFuncVar(name);
+        CoreManager.getInstance().removeFuncVar(name);
     }
 
     public static class Content {
         public CODE code;
-        public List<NAME> paramList;
+        public List<NAME> paramList = new LinkedList<>();
 
         public Content(CODE code, List<NAME> paramList) {
             this.code = code;
-            this.paramList = paramList;
+            this.paramList.clear();
+            this.paramList.addAll(paramList);
         }
 
         public static Content clone(Content content) {

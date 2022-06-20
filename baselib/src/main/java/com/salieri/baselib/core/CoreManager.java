@@ -22,6 +22,7 @@ public class CoreManager {
     private Map<String, FUNC.Content> funcMap = new HashMap<>();
     private Map<String, Map<String, NUM>> funcVarMap = new HashMap<>();
     private static CoreManager instance = new CoreManager();
+    private Map<String, NUM> mainVarMap = new HashMap<>();
     private CoreManager(){
         taskList.add(FD.class);
         taskList.add(BK.class);
@@ -29,7 +30,7 @@ public class CoreManager {
         taskList.add(LT.class);
         taskList.add(FUNC.class);
         taskList.add(REPEAT.class);
-        funcVarMap.put(MAIN_FIELD, new HashMap<>());
+        funcVarMap.put(MAIN_FIELD, mainVarMap);
     }
 
     public void init() {
@@ -90,7 +91,11 @@ public class CoreManager {
         }
     }
 
-    public void clearFuncVar(String field) {
+    public void clearMainVar() {
+        mainVarMap.clear();
+    }
+
+    public void removeFuncVar(String field) {
         funcVarMap.remove(field);
     }
 

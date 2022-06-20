@@ -16,6 +16,7 @@ import com.salieri.baselib.utils.ToastUtil;
 
 import java.lang.reflect.Constructor;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class Decoder {
     private Class<?>[] requiredParams;
     Constructor<?> ctor;
     private List<TYPE> paramList = new LinkedList<>();
+    private boolean canDefineFunc = false; //仅在主函数最外层可以自定义函数
 
     private String curParsingFuncName = "";
     private List<NUM> funcParamList = new LinkedList<>();
@@ -60,6 +62,10 @@ public class Decoder {
 
     public void setField(String field) {
         this.field = field;
+    }
+
+    public void setCanDefineFunc(boolean canDefineFunc) {
+        this.canDefineFunc = canDefineFunc;
     }
 
     public void decode(CODE code) {
@@ -280,6 +286,58 @@ public class Decoder {
     }
 
     private void taskBuild() throws Exception {
+        Iterator<TYPE> iterator = typeList.iterator();
+        boolean isFuncDefining = false;
+        NAME funcName = null;
+        List<NAME> paramNameList = new LinkedList<>();
+        while (iterator.hasNext()) {
+            TYPE type = iterator.next();
+            if (type instanceof TASK) {
+                TASK task = (TASK) type;
+                if (task.value == FUNC.class) {
+                    isFuncDefining = true;
+                    iterator.remove();
+
+                } else {
+                    isFuncDefining = false;
+                    funcName = null;
+                    paramNameList.clear();
+                }
+            } else if (isFuncDefining) {
+                if (type instanceof NAME) {
+                    NAME name = (NAME) type;
+                    if (funcName == null) funcName = name;
+                    else paramNameList.add(name);
+                    iterator.remove();
+                } else if (type instanceof NUM && !TextUtils.isEmpty(((NUM) type).varName)) {
+                    NAME name = new NAME(((NUM) type).varName);
+                    if (funcName == null) funcName = name;
+                    else paramNameList.add(name);
+                    iterator.remove();
+                } else if (type instanceof CODE) {
+                    CODE code = (CODE) type;
+                    if (funcName != null) {
+                        if (canDefineFunc) {
+                            FUNC.Content content = new FUNC.Content(code, paramNameList);
+                            CoreManager.getInstance().registerFunc(funcName.value, content);
+                        } else {
+                            EngineHolder.getEngine().error("Cannot define function here");
+                        }
+                    }
+                    isFuncDefining = false;
+                    funcName = null;
+                    paramNameList.clear();
+                    iterator.remove();
+                } else {
+                    isFuncDefining = false;
+                    funcName = null;
+                    paramNameList.clear();
+                }
+            }
+        }
+
+
+
         for (TYPE type : typeList) {
             if (curParsingTask != null) {
                 //正在解析函数

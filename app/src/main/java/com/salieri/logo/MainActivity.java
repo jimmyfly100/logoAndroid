@@ -27,24 +27,24 @@ public class MainActivity extends AppCompatActivity {
         canvasView = findViewById(R.id.canvas_view);
         codeTv = findViewById(R.id.code_tv);
         String text = "FD 200 A=300 B=90 REPEAT 3[FD A RT B A=A-100 REPEAT 4 [FD 30 RT 90]]";
-        String text2 = "A=1 B=0 REPEAT 3 [SALIERI A B+1 360 FD 200] AAAAA A + 100 B + 60 500";
+        String text2 = "BK 100 FUNC AAAAA A B C [FD A RT B BK C] FUNC SALIERI A B C [REPEAT C[FD A RT B]] A=1 B=0 REPEAT 3 [SALIERI A B+1 360 FD 200] AAAAA A + 100 B + 60 500";
         codeTv.setText(text2);
 
-        String codeStr = "REPEAT C[FD A RT B]";
-        List<NAME> paramList = new LinkedList<>();
-        paramList.add(new NAME("A"));
-        paramList.add(new NAME("B"));
-        paramList.add(new NAME("C"));
-        FUNC.Content content = new FUNC.Content(new CODE(codeStr), paramList);
-        CoreManager.getInstance().registerFunc("SALIERI", content);
+//        String codeStr = "REPEAT C[FD A RT B]";
+//        List<NAME> paramList = new LinkedList<>();
+//        paramList.add(new NAME("A"));
+//        paramList.add(new NAME("B"));
+//        paramList.add(new NAME("C"));
+//        FUNC.Content content = new FUNC.Content(new CODE(codeStr), paramList);
+//        CoreManager.getInstance().registerFunc("SALIERI", content);
 
-        String codeStr2 = "FD A RT B BK C";
-        List<NAME> paramList2 = new LinkedList<>();
-        paramList2.add(new NAME("A"));
-        paramList2.add(new NAME("B"));
-        paramList2.add(new NAME("C"));
-        FUNC.Content content2 = new FUNC.Content(new CODE(codeStr2), paramList2);
-        CoreManager.getInstance().registerFunc("AAAAA", content2);
+//        String codeStr2 = "FD A RT B BK C";
+//        List<NAME> paramList2 = new LinkedList<>();
+//        paramList2.add(new NAME("A"));
+//        paramList2.add(new NAME("B"));
+//        paramList2.add(new NAME("C"));
+//        FUNC.Content content2 = new FUNC.Content(new CODE(codeStr2), paramList2);
+//        CoreManager.getInstance().registerFunc("AAAAA", content2);
 
         findViewById(R.id.button).setOnClickListener(v -> {
             CoreManager.getInstance().init();
