@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.salieri.baselib.core.CoreManager;
+import com.salieri.baselib.core.EngineHolder;
 import com.salieri.baselib.task.TaskSet;
 import com.salieri.baselib.task.logotask.FUNC;
 import com.salieri.baselib.task.logotask.MAIN;
 import com.salieri.baselib.type.CODE;
 import com.salieri.baselib.type.NAME;
+import com.salieri.drawengine.AndroidEngine;
 import com.salieri.drawengine.CanvasView;
 
 import java.util.LinkedList;
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         canvasView = findViewById(R.id.canvas_view);
         codeTv = findViewById(R.id.code_tv);
-        String text = "FD 200 A=300 B=90 REPEAT 3[FD A RT B A=A-100 REPEAT 4 [FD 30 RT 90]]";
+        String text = "REPEAT 6[BK 300 FD 400 RT 60]";
         String text2 = "BK 100 FUNC AAAAA A B C [FD A RT B BK C] FUNC SALIERI A B C [REPEAT C[FD A RT B]] A=1 B=0 REPEAT 3 [SALIERI A B+1 360 FD 200] AAAAA A + 100 B + 60 500";
         codeTv.setText(text2);
 

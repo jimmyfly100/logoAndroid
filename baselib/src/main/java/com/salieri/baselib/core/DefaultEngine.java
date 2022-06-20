@@ -7,8 +7,8 @@ import com.salieri.baselib.utils.BaseUtil;
 import com.salieri.baselib.utils.ToastUtil;
 
 public class DefaultEngine implements ILogoEngine {
-    private float x = 0;
-    private float y = 0;
+    private double x = 0;
+    private double y = 0;
     private float angle = 0;
     @Override
     public void FD(NUM value) {

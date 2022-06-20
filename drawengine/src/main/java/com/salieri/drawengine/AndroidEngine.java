@@ -8,9 +8,9 @@ import com.salieri.baselib.utils.BaseUtil;
 import com.salieri.baselib.utils.ToastUtil;
 
 public class AndroidEngine implements ILogoEngine {
-    private float x = 0;
-    private float y = 0;
-    private float angle = 0;
+    private double x = 0;
+    private double y = 0;
+    private double angle = 0;
     private ICanvas canvas = new DefaultCanvas();
 
     public AndroidEngine(ICanvas canvas) {
@@ -26,21 +26,21 @@ public class AndroidEngine implements ILogoEngine {
 
     @Override
     public void FD(NUM value) {
-        float lastX = x;
-        float lastY = y;
+        double lastX = x;
+        double lastY = y;
         y -= value.value * Math.cos(angle);
         x += value.value * Math.sin(angle);
-        canvas.drawLine(lastX, lastY, x, y);
+        canvas.drawLine((float) lastX, (float) lastY, (float) x, (float) y);
         print("FD");
     }
 
     @Override
     public void BK(NUM value) {
-        float lastX = x;
-        float lastY = y;
+        double lastX = x;
+        double lastY = y;
         y += value.value * Math.cos(angle);
         x -= value.value * Math.sin(angle);
-        canvas.drawLine(lastX, lastY, x, y);
+        canvas.drawLine((float) lastX, (float) lastY, (float) x, (float) y);
         print("BK");
     }
 

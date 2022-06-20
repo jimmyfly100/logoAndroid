@@ -8,13 +8,13 @@ import com.salieri.baselib.core.CoreManager;
 
 public class NUM implements TYPE{
 
-    public NUM(float value) {
+    public NUM(double value) {
         this.value = value;
     }
 
-    public float value = 0;
+    public double value = 0;
 
-    public float getValue() {
+    public double getValue() {
         return value;
 //        if (TextUtils.isEmpty(varName) || fromMap) return value;
 //        return CoreManager.getInstance().getVarValue(varName).value;

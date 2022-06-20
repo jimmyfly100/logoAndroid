@@ -221,16 +221,16 @@ public class Decoder {
                 return null;
             }
             if (operateState == STATE_ADD) {
-                float ans = lastNum.getValue() + num.getValue();
+                double ans = lastNum.getValue() + num.getValue();
                 return new NUM(ans);
             } else if (operateState == STATE_MINUS) {
-                float ans = lastNum.getValue() - num.getValue();
+                double ans = lastNum.getValue() - num.getValue();
                 return new NUM(ans);
             } else if (operateState == STATE_MULTIPLY) {
-                float ans = lastNum.getValue() * num.getValue();
+                double ans = lastNum.getValue() * num.getValue();
                 return new NUM(ans);
             } else if (operateState == STATE_DIVIDE) {
-                float ans = lastNum.getValue() / num.getValue();
+                double ans = lastNum.getValue() / num.getValue();
                 return new NUM(ans);
             } else if (operateState == STATE_DEFAULT) {
                 EngineHolder.getEngine().error("state error");
