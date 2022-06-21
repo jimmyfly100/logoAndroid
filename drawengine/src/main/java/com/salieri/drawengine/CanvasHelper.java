@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,8 +16,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.salieri.baselib.core.EngineHolder;
 
-@Deprecated
-public class CanvasView extends View implements ICanvas{
+public class CanvasHelper implements ICanvas{
     private Canvas canvas;
     private Bitmap bitmap;
     private Bitmap turtleBmp;
@@ -25,40 +25,21 @@ public class CanvasView extends View implements ICanvas{
     private Paint turtlePaint;
     private SubsamplingScaleImageView imageView;
     private boolean init = false;
-    public CanvasView(Context context) {
-        super(context);
-    }
 
-    public CanvasView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
+    private float scale = 1;
+    private PointF center = null;
 
-    private int viewWidth, viewHeight;
+    private static final int HEIGHT = 6000;
+    private static final int WIDTH = 3000;
 
-    public void setImageView(SubsamplingScaleImageView imageView) {
+    public CanvasHelper(SubsamplingScaleImageView imageView) {
         this.imageView = imageView;
-    }
-
-    //大小
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        //宽
-        int measureWidth = MeasureSpec.getSize(widthMeasureSpec);
-        //高
-        int measureHeight = MeasureSpec.getSize(heightMeasureSpec);
-        if (measureWidth != 0 && measureHeight != 0) {
-            viewWidth = measureWidth;
-            viewHeight = measureHeight;
-            initCanvas();
-        }
+        initCanvas();
     }
 
     private void initCanvas() {
-        if (init) return;
-        init = true;
-        paint = new Paint(Paint.DITHER_FLAG);//创建一个画笔
-        bitmap = Bitmap.createBitmap(3000, 3000, Bitmap.Config.ARGB_8888);//设置位图的宽高
+        paint = new Paint(Paint.DITHER_FLAG);
+        bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint.setStyle(Paint.Style.STROKE);//设置非填充
         paint.setStrokeWidth(5);//笔宽5像素
@@ -69,28 +50,20 @@ public class CanvasView extends View implements ICanvas{
         paint.setStrokeCap(Paint.Cap.ROUND);//设置画笔为圆形样式
 
         turtlePaint = new Paint(Paint.DITHER_FLAG);
-        turtlePaint.setStyle(Paint.Style.FILL);//设置非填充
-        turtlePaint.setStrokeWidth(3);//笔宽5像素
-        turtlePaint.setColor(Color.WHITE);//设置为红笔
+        turtlePaint.setStyle(Paint.Style.FILL);
+        turtlePaint.setStrokeWidth(3);
+        turtlePaint.setColor(Color.WHITE);
 
-        turtleBmp = Bitmap.createBitmap(viewWidth, viewHeight, Bitmap.Config.ARGB_8888);//设置位图的宽高
+        turtleBmp = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
         turtleCanvas = new Canvas(turtleBmp);
 
 
-        EngineHolder.get().setEngine(new AndroidEngine(viewWidth / 2f, viewHeight / 2f, 0, this));
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-//        if (bitmap != null) canvas.drawBitmap(bitmap, 0, 0, paint);
-//        if (turtleBmp != null) canvas.drawBitmap(turtleBmp, 0, 0, paint);
+        EngineHolder.get().setEngine(new AndroidEngine(WIDTH / 2f, HEIGHT / 2f, 0, this));
     }
 
     @Override
     public void drawLine(float fromX, float fromY, float toX, float toY) {
         canvas.drawLine(fromX, fromY, toX, toY, paint);
-        invalidate();
     }
 
     @Override
@@ -110,12 +83,25 @@ public class CanvasView extends View implements ICanvas{
         turtleCanvas.drawLine(x1, y1, x2, y2, turtlePaint);
         turtleCanvas.drawLine(x1, y1, x3, y3, turtlePaint);
         turtleCanvas.drawLine(x2, y2, x3, y3, turtlePaint);
+        draw();
 
-        Bitmap bp = Bitmap.createBitmap(3000, 3000, Bitmap.Config.ARGB_4444);//设置位图的宽高
+    }
+
+    public void draw() {
+        scale = imageView.getScale();
+        center = imageView.getCenter();
+        if (imageView == null || bitmap == null || turtleBmp == null) return;
+        Bitmap bp = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_4444);//设置位图的宽高
         Canvas cv = new Canvas(bp);
         cv.drawBitmap(bitmap, 0, 0, paint);
-        if (imageView != null && bitmap != null) imageView.setImage(ImageSource.bitmap(bp));
-
+        cv.drawBitmap(turtleBmp, 0, 0, paint);
+        imageView.setImage(ImageSource.bitmap(bp));
+        if (!init) {
+            init = true;
+            imageView.setScaleAndCenter(1, new PointF(WIDTH / 2f, HEIGHT / 2f));
+        } else {
+            imageView.setScaleAndCenter(scale, center);
+        }
     }
 
 }
