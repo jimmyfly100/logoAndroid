@@ -388,6 +388,8 @@ public class Decoder {
                 NAME name = (NAME) type;
                 if (CoreManager.getInstance().isFunc(name.value)) {
                     curParsingFuncName = name.value;
+                } else {
+                    EngineHolder.getEngine().error("cannot resolve text: " + "'" + name.value + "'");
                 }
             }
         }

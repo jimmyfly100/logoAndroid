@@ -34,4 +34,19 @@
         android:text="Hello World!"
         android:layout_centerInParent="true"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/save_bt"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load"
+        android:id="@+id/load_bt"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
 </RelativeLayout>

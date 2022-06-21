@@ -61,5 +61,13 @@ public class MainActivity extends AppCompatActivity {
             main.run();
         });
 
+        findViewById(R.id.save_bt).setOnClickListener(v -> {
+            EngineHolder.getEngine().saveAllFunc();
+        });
+
+        findViewById(R.id.load_bt).setOnClickListener(v -> {
+            EngineHolder.getEngine().loadAllFunc();
+        });
+
     }
 }

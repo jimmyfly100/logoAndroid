@@ -9,4 +9,6 @@ public interface ILogoEngine {
     void LT(NUM value);
     void error(String msg);
     void drawTurtle();
+    void saveAllFunc();
+    void loadAllFunc();
 }

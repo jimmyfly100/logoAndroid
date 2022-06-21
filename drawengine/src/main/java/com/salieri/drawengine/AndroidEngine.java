@@ -2,10 +2,15 @@ package com.salieri.drawengine;
 
 import android.util.Log;
 
+import com.salieri.baselib.core.CoreManager;
 import com.salieri.baselib.core.ILogoEngine;
+import com.salieri.baselib.task.logotask.FUNC;
 import com.salieri.baselib.type.NUM;
 import com.salieri.baselib.utils.BaseUtil;
+import com.salieri.baselib.utils.PrefFuncUtil;
 import com.salieri.baselib.utils.ToastUtil;
+
+import java.util.Map;
 
 public class AndroidEngine implements ILogoEngine {
     private double x = 0;
@@ -27,6 +32,23 @@ public class AndroidEngine implements ILogoEngine {
 
     public void drawTurtle() {
         canvas.drawTurtle((float) x, (float) y, (float) angle);
+    }
+
+    @Override
+    public void saveAllFunc() {
+        for (Map.Entry<String, FUNC.Content> entry : CoreManager.getInstance().getFuncMap().entrySet()) {
+            PrefFuncUtil.getInstance().putFunc(entry.getKey(), entry.getValue());
+            ToastUtil.show("save Func: " + entry.getKey() + "   code: " + entry.getValue().code.value);
+
+        }
+    }
+
+    @Override
+    public void loadAllFunc() {
+        for (Map.Entry<String, FUNC.Content> entry : PrefFuncUtil.getInstance().getAllFunc().entrySet()) {
+            CoreManager.getInstance().registerFunc(entry.getKey(), entry.getValue());
+            ToastUtil.show("load Func: " + entry.getKey() + "   code: " + entry.getValue().code.value);
+        }
     }
 
     @Override

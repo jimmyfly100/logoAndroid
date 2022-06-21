@@ -103,4 +103,8 @@ public class CoreManager {
         return FUNC.Content.clone(funcMap.get(name));
 //        return funcMap.get(name);
     }
+
+    public Map<String, FUNC.Content> getFuncMap() {
+        return funcMap;
+    }
 }

@@ -46,6 +46,16 @@ public class DefaultEngine implements ILogoEngine {
 
     }
 
+    @Override
+    public void saveAllFunc() {
+
+    }
+
+    @Override
+    public void loadAllFunc() {
+
+    }
+
     private void print(String func) {
         Log.d("LogoEngine", "Func " + func + " is called. Current state is: x = " + x + " y = " + y + " angle = " + angle);
     }
