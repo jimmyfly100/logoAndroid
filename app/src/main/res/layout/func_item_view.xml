@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginTop="12dp"
+    android:background="#dedee0"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="70dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:textColor="#333333"
+        tools:text="Polygon"/>
+
+    <TextView
+        android:id="@+id/code_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="240dp"
+        android:maxHeight="64dp"
+        android:ellipsize="end"
+        android:textSize="14dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="100dp"
+        android:textColor="#333333"
+        tools:text="Polygonsdsadawdoiajcoaisjcoiasjcoasinvoawinvoawnvaoinvaiosnvoiasnvzxkjzoicjziocjzoc"/>
+    
+    <TextView
+        android:id="@+id/button"
+        android:layout_width="40dp"
+        android:layout_height="26dp"
+        android:text="Load"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:background="#30d395"/>
+
+</RelativeLayout>
