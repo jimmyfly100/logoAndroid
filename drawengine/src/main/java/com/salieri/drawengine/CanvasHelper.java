@@ -70,14 +70,27 @@ public class CanvasHelper implements ICanvas{
     public void drawTurtle(float x, float y, float angle) {
         float length = 20;
         float height = 40;
-        float x1 = (float) (x - Math.cos(angle) * length / 2f);
-        float y1 = (float) (y - Math.sin(angle) * length / 2f);
 
-        float x2 = (float) (x + Math.cos(angle) * length / 2f);
-        float y2 = (float) (y + Math.sin(angle) * length / 2f);
+        //三角形底部中心作为当前坐标
+//        float x1 = (float) (x - Math.cos(angle) * length / 2f);
+//        float y1 = (float) (y - Math.sin(angle) * length / 2f);
+//
+//        float x2 = (float) (x + Math.cos(angle) * length / 2f);
+//        float y2 = (float) (y + Math.sin(angle) * length / 2f);
+//
+//        float x3 = (float) (x + Math.sin(angle) * height);
+//        float y3 = (float) (y - Math.cos(angle) * height);
 
-        float x3 = (float) (x + Math.sin(angle) * height);
-        float y3 = (float) (y - Math.cos(angle) * height);
+
+        //三角形中心作为当前坐标
+        float x1 = (float) (x - Math.cos(angle) * length / 2f - Math.sin(angle) * height / 2f);
+        float y1 = (float) (y - Math.sin(angle) * length / 2f + Math.cos(angle) * height / 2f);
+
+        float x2 = (float) (x + Math.cos(angle) * length / 2f - Math.sin(angle) * height / 2f);
+        float y2 = (float) (y + Math.sin(angle) * length / 2f + Math.cos(angle) * height / 2f);
+
+        float x3 = (float) (x + Math.sin(angle) * height / 2f);
+        float y3 = (float) (y - Math.cos(angle) * height / 2f);
 
         turtleCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         turtleCanvas.drawLine(x1, y1, x2, y2, turtlePaint);
