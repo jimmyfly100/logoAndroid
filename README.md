@@ -22,6 +22,12 @@ REPEAT 4[FD 100 RT 90] 绘制一个边长100的正方形
 A = 5 B = 90 REPEAT 100[FD A+5 RT 90 A=A+5] 绘制一个螺旋迷宫状图案 
 
 ### 支持自定义函数
+TO FuncName :param1 :param2
+
+FD param1 RT param2
+
+END
+
 如
 TO STAR :length REPEAT 5[FD length RT 144] END REPEAT 4[FD 100 RT 90] STAR 400 定义一个五角星函数，调用绘制一个边长可自定义的五角星
 
