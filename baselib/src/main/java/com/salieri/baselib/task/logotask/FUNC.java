@@ -13,12 +13,15 @@ import java.util.List;
 public class FUNC implements LogoTask {
     private String name = "";
     private List<NUM> numList = new LinkedList<>();
+    private static int seq = 0;
+    private int mSeq = 0;
 
 
     public FUNC(String name, List<NUM> numList) {
         this.name = name;
         this.numList.clear();
         this.numList.addAll(numList);
+        this.mSeq = seq++;
     }
 
     @Override
@@ -32,8 +35,12 @@ public class FUNC implements LogoTask {
             insertCode.append(paramName.value).append("=").append(val.value).append(" ");
         }
         content.code = new CODE(insertCode + content.code.value);
-        new TaskSet(content.code, name).run();
-        CoreManager.getInstance().removeFuncVar(name);
+        new TaskSet(content.code, getField()).run();
+        CoreManager.getInstance().removeFuncVar(getField());
+    }
+
+    private String getField() {
+        return name + mSeq;
     }
 
     public static class Content {

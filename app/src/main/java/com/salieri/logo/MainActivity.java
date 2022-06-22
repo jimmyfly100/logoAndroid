@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         codeTv = findViewById(R.id.code_tv);
         String text = "FUNC Polygon length num [REPEAT num[FD length RT 360/num]] Polygon 100 8";
         String text2 = "BK 100 To AAAAA :A :B :C FD A RT B BK C End TO SALIERI :A :B :C REPEAT C[fd A rt B] END a=1 b=0 REPEAT 3 [SALIERI a b+1 360 FD 200] AAAAA a + 100 b + 60 500";
-        String text3 = "TO STAR :length REPEAT 5[FD length RT 144] END REPEAT 4[FD 100 RT 90] STAR 400 RT 90 FD 500";
+        String text3 = "TO STAR :length REPEAT 5[test 100 fd length RT 144] END TO test :length REPEAT 4[FD length RT 90] END STAR 500";
         codeTv.setText(text3);
         helper = new CanvasHelper(imageView);
 
