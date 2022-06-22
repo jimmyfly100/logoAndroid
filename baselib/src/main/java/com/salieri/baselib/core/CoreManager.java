@@ -13,6 +13,7 @@ import com.salieri.baselib.type.NUM;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class CoreManager {
         taskList.add(BK.class);
         taskList.add(RT.class);
         taskList.add(LT.class);
-        taskList.add(FUNC.class);
+//        taskList.add(FUNC.class);
         taskList.add(REPEAT.class);
         funcVarMap.put(MAIN_FIELD, mainVarMap);
     }
@@ -38,15 +39,17 @@ public class CoreManager {
     }
 
     public boolean isTask(String text) {
+        String upper = text.toUpperCase();
         for (Class<? extends LogoTask> clazz : taskList) {
-            if (clazz.getSimpleName().equals(text)) return true;
+            if (clazz.getSimpleName().equals(upper)) return true;
         }
         return false;
     }
 
     public Class<? extends LogoTask> getTask(String text) {
+        String upper = text.toUpperCase();
         for (Class<? extends LogoTask> clazz : taskList) {
-            if (clazz.getSimpleName().equals(text)) return clazz;
+            if (clazz.getSimpleName().equals(upper)) return clazz;
         }
         return null;
     }

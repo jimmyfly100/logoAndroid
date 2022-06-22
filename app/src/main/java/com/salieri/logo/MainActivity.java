@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image);
         codeTv = findViewById(R.id.code_tv);
         String text = "FUNC Polygon length num [REPEAT num[FD length RT 360/num]] Polygon 100 8";
-        String text2 = "BK 100 FUNC AAAAA A B C [FD A RT B BK C] FUNC SALIERI A B C [REPEAT C[FD A RT B]] A=1 B=0 REPEAT 3 [SALIERI A B+1 360 FD 200] AAAAA A + 100 B + 60 500";
-        codeTv.setText(text);
+        String text2 = "BK 100 To AAAAA :A :B :C FD A RT B BK C End TO SALIERI :A :B :C REPEAT C[fd A rt B] END a=1 b=0 REPEAT 3 [SALIERI a b+1 360 FD 200] AAAAA a + 100 b + 60 500";
+        String text3 = "TO STAR :length REPEAT 5[FD length RT 144] END REPEAT 4[FD 100 RT 90] STAR 400 RT 90 FD 500";
+        codeTv.setText(text3);
         helper = new CanvasHelper(imageView);
 
 //        String codeStr = "REPEAT C[FD A RT B]";

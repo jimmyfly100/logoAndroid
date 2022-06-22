@@ -12,7 +12,6 @@ import com.salieri.baselib.type.NUM;
 import com.salieri.baselib.type.TASK;
 import com.salieri.baselib.type.TYPE;
 import com.salieri.baselib.type.VAR;
-import com.salieri.baselib.utils.ToastUtil;
 
 import java.lang.reflect.Constructor;
 import java.util.Collections;
@@ -74,6 +73,7 @@ public class Decoder {
         String buffer = code.value;
         buffer = preProcess(buffer);
         Collections.addAll(splitStrings, buffer.split(" |\n"));
+        funcDefine();
         classify();
         try {
             taskBuild();
@@ -90,7 +90,72 @@ public class Decoder {
         code = code.replace("-", " - ");
         code = code.replace("*", " * ");
         code = code.replace("/", " / ");
+        code = code.replace(":", " : ");
         return code;
+    }
+
+    /**
+     * 解析TO ... END这种logo原始的定义函数方式的解析
+     */
+    private void funcDefine() {
+//        if (!canDefineFunc) return;
+        Iterator<String> iterator = splitStrings.iterator();
+        boolean isDefining = false;
+        boolean isNextTextParam = false; // 是否是跟在冒号之后，是则为参数声明
+        boolean isNextTextFuncName = false;
+        List<NAME> paraList =  new LinkedList<>();
+        StringBuilder code = new StringBuilder();
+        String name = "";
+        while(iterator.hasNext()) {
+            String text = iterator.next();
+            if (isDefining) {
+                iterator.remove();
+                if (isTO(text)) {
+                    EngineHolder.getEngine().error("syntax error! Unexpected 'TO'");
+                } else if (text.contains(":")) {
+                    isNextTextParam = true;
+                    isNextTextFuncName = false;
+                } else if (isEND(text)) {
+                    isDefining = false;
+                    if (TextUtils.isEmpty(name) || TextUtils.isEmpty(code)) {
+                        EngineHolder.getEngine().error("syntax error! Function definition failed");
+                    } else {
+                        FUNC.Content content = new FUNC.Content(new CODE(code.toString()), paraList);
+                        CoreManager.getInstance().registerFunc(name, content);
+                    }
+                } else if (isNextTextFuncName) {
+                    name = text;
+                    isNextTextFuncName = false;
+                } else if (isNextTextParam) {
+                    paraList.add(new NAME(text));
+                    isNextTextParam = false;
+                } else {
+                    code.append(text).append(" ");
+                }
+            } else {
+                if (isTO(text)) {
+                    isDefining = true;
+                    isNextTextFuncName = true;
+                    isNextTextParam = false;
+
+                    name = "";
+                    paraList.clear();
+                    code = new StringBuilder();
+                    iterator.remove();
+                } else if (isEND(text)) {
+                    iterator.remove();
+                    EngineHolder.getEngine().error("syntax error! Unexpected 'END'");
+                }
+            }
+        }
+    }
+
+    private boolean isTO(String text) {
+        return text.toUpperCase().equals("TO");
+    }
+
+    private boolean isEND(String text) {
+        return text.toUpperCase().equals("END");
     }
 
     private void classify() {
@@ -286,55 +351,57 @@ public class Decoder {
     }
 
     private void taskBuild() throws Exception {
-        Iterator<TYPE> iterator = typeList.iterator();
-        boolean isFuncDefining = false;
-        NAME funcName = null;
-        List<NAME> paramNameList = new LinkedList<>();
-        while (iterator.hasNext()) {
-            TYPE type = iterator.next();
-            if (type instanceof TASK) {
-                TASK task = (TASK) type;
-                if (task.value == FUNC.class) {
-                    isFuncDefining = true;
-                    iterator.remove();
+        //自定义的FUNC定义函数的方式，注释掉
 
-                } else {
-                    isFuncDefining = false;
-                    funcName = null;
-                    paramNameList.clear();
-                }
-            } else if (isFuncDefining) {
-                if (type instanceof NAME) {
-                    NAME name = (NAME) type;
-                    if (funcName == null) funcName = name;
-                    else paramNameList.add(name);
-                    iterator.remove();
-                } else if (type instanceof NUM && !TextUtils.isEmpty(((NUM) type).varName)) {
-                    NAME name = new NAME(((NUM) type).varName);
-                    if (funcName == null) funcName = name;
-                    else paramNameList.add(name);
-                    iterator.remove();
-                } else if (type instanceof CODE) {
-                    CODE code = (CODE) type;
-                    if (funcName != null) {
-                        if (canDefineFunc) {
-                            FUNC.Content content = new FUNC.Content(code, paramNameList);
-                            CoreManager.getInstance().registerFunc(funcName.value, content);
-                        } else {
-                            EngineHolder.getEngine().error("Cannot define function here");
-                        }
-                    }
-                    isFuncDefining = false;
-                    funcName = null;
-                    paramNameList.clear();
-                    iterator.remove();
-                } else {
-                    isFuncDefining = false;
-                    funcName = null;
-                    paramNameList.clear();
-                }
-            }
-        }
+//        Iterator<TYPE> iterator = typeList.iterator();
+//        boolean isFuncDefining = false;
+//        NAME funcName = null;
+//        List<NAME> paramNameList = new LinkedList<>();
+//        while (iterator.hasNext()) {
+//            TYPE type = iterator.next();
+//            if (type instanceof TASK) {
+//                TASK task = (TASK) type;
+//                if (task.value == FUNC.class) {
+//                    isFuncDefining = true;
+//                    iterator.remove();
+//
+//                } else {
+//                    isFuncDefining = false;
+//                    funcName = null;
+//                    paramNameList.clear();
+//                }
+//            } else if (isFuncDefining) {
+//                if (type instanceof NAME) {
+//                    NAME name = (NAME) type;
+//                    if (funcName == null) funcName = name;
+//                    else paramNameList.add(name);
+//                    iterator.remove();
+//                } else if (type instanceof NUM && !TextUtils.isEmpty(((NUM) type).varName)) {
+//                    NAME name = new NAME(((NUM) type).varName);
+//                    if (funcName == null) funcName = name;
+//                    else paramNameList.add(name);
+//                    iterator.remove();
+//                } else if (type instanceof CODE) {
+//                    CODE code = (CODE) type;
+//                    if (funcName != null) {
+//                        if (canDefineFunc) {
+//                            FUNC.Content content = new FUNC.Content(code, paramNameList);
+//                            CoreManager.getInstance().registerFunc(funcName.value, content);
+//                        } else {
+//                            EngineHolder.getEngine().error("Cannot define function here");
+//                        }
+//                    }
+//                    isFuncDefining = false;
+//                    funcName = null;
+//                    paramNameList.clear();
+//                    iterator.remove();
+//                } else {
+//                    isFuncDefining = false;
+//                    funcName = null;
+//                    paramNameList.clear();
+//                }
+//            }
+//        }
 
 
 
