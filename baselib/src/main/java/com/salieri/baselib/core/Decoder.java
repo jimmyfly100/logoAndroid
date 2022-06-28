@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.salieri.baselib.task.LogoTask;
 import com.salieri.baselib.task.TaskSet;
 import com.salieri.baselib.task.logotask.FUNC;
+import com.salieri.baselib.type.BRACKET;
 import com.salieri.baselib.type.CODE;
 import com.salieri.baselib.type.ENDMARK;
 import com.salieri.baselib.type.NAME;
@@ -12,6 +13,11 @@ import com.salieri.baselib.type.NUM;
 import com.salieri.baselib.type.TASK;
 import com.salieri.baselib.type.TYPE;
 import com.salieri.baselib.type.VAR;
+import com.salieri.baselib.type.calc.ADD;
+import com.salieri.baselib.type.calc.CALCMARK;
+import com.salieri.baselib.type.calc.DIVIDE;
+import com.salieri.baselib.type.calc.MINUS;
+import com.salieri.baselib.type.calc.MULTIPLY;
 
 import java.lang.reflect.Constructor;
 import java.util.Collections;
@@ -40,7 +46,8 @@ public class Decoder {
     private String curAssigningVar = "";
     private boolean needValue = false; // 赋值运算是否还需要一个值
     private LinkedList<TYPE> typeList = new LinkedList<>();
-    //todo: 在这一步进行函数定义的处理，在CoreManager中register func
+    LinkedList<TYPE> calcList = new LinkedList<>();
+    LinkedList<List<TYPE>> bracketContentStack = new LinkedList<>();
 
     //第三步
     private TaskSet taskSet;
@@ -85,6 +92,8 @@ public class Decoder {
     private String preProcess(String code) {
         code = code.replace("[", " [ ");
         code = code.replace("]", " ] ");
+        code = code.replace("(", " ( ");
+        code = code.replace(")", " ) ");
         code = code.replace("=", " = ");
         code = code.replace("+", " + ");
         code = code.replace("-", " - ");
@@ -164,84 +173,169 @@ public class Decoder {
         for (String item : splitStrings) {
             item = item.trim();
             if (TextUtils.isEmpty(item)) continue;
-            if (operateState == STATE_DEFAULT) {
-                //未处于运算
-                if (item.contains("[")) {
-                    if (codeNum > 0) {
-                        curCode.append(item).append(" ");
-                    }
-                    codeNum++;
-                    continue;
-                } else if (item.contains("]")) {
-                    codeNum--;
-                    if (codeNum < 0) {
-                        EngineHolder.getEngine().error("invalid input");
-                        break;
-                    } else if (codeNum == 0) {
-                        typeList.add(new CODE(curCode.toString()));
-                        curCode = new StringBuilder();
-                    } else {
-                        curCode.append(item).append(" ");
-                    }
-                    continue;
-                }
-
+            //未处于运算
+            if (item.contains("[")) {
                 if (codeNum > 0) {
-                    //在括号中，不解析
                     curCode.append(item).append(" ");
-                    continue;
                 }
-
-                //是否是运算符
-                if (checkIsOperator(item)) continue;
-                //是否要开始赋值操作
-                if (checkStartAssigning(item)) {
-                    needValue = true;
-                    continue;
-                }
-
-                if (!needValue) checkFinishAssigning();
-
-                NUM num = parseNumber(item);
-                if (num != null) {
-                    typeList.add(num);
-                    needValue = false;
-                    continue;
-                }
-
-//                if (CoreManager.getInstance().isVariable(item)) {
-//                    typeList.add(new VAR(item));
-//                    needValue = false;
-//                    continue;
-//                }
-
-                checkFinishAssigning();
-
-                if (CoreManager.getInstance().isTask(item)) {
-                    typeList.add(new TASK(CoreManager.getInstance().getTask(item)));
-                    continue;
-                }
-
-                typeList.add(new NAME(item));
-            } else {
-                //处于运算
-                NUM num = parseNumber(item);
-                if (num != null) {
-                    //是数字或变量
-                    num = doCurOperation(num);
-                }
-                if (num != null) {
-                    typeList.removeLast();
-                    typeList.add(num);
+                codeNum++;
+                continue;
+            } else if (item.contains("]")) {
+                codeNum--;
+                if (codeNum < 0) {
+                    EngineHolder.getEngine().error("invalid input");
+                    break;
+                } else if (codeNum == 0) {
+                    finishCalculate();
+                    typeList.add(new CODE(curCode.toString()));
+                    curCode = new StringBuilder();
                 } else {
-                    EngineHolder.getEngine().error("invalid operator syntax");
+                    curCode.append(item).append(" ");
                 }
-                operateState = STATE_DEFAULT;
+                continue;
             }
 
+            if (codeNum > 0) {
+                //在括号中，不解析
+                curCode.append(item).append(" ");
+                continue;
+            }
+
+            if (item.contains("(")) {
+                bracketContentStack.addLast(new LinkedList<>());
+                continue;
+            } else if (item.contains(")")) {
+                if (bracketContentStack.size() <= 0) {
+                    EngineHolder.getEngine().error("syntax error! unexpected ')'");
+                } else {
+                    BRACKET bracket = new BRACKET(bracketContentStack.removeLast());
+                    if (bracketContentStack.size() > 0) {
+                        //仍处于括号嵌套中
+                        bracketContentStack.getLast().add(bracket);
+                    } else {
+                        //最外层括号解析完成
+                        checkCalculateNum(bracket);
+                    }
+                }
+                continue;
+            }
+            if (bracketContentStack.size() > 0) {
+                CALCMARK mark = parseCalcMark(item);
+                NUM num = parseNumber(item);
+                if (mark != null) {
+                    bracketContentStack.getLast().add(mark);
+                } else if (num != null) {
+                    bracketContentStack.getLast().add(num);
+                }
+                continue;
+            }
+
+            CALCMARK mark = parseCalcMark(item);
+            if (mark != null) {
+                checkCalculateMark(mark);
+                continue;
+            }
+
+
+
+            NUM num = parseNumber(item);
+            if (num != null) {
+                checkCalculateNum(num);
+//                    needValue = false;
+                continue;
+            }
+
+            finishCalculate();
+
+            //是否要开始赋值操作
+            if (checkStartAssigning(item)) {
+//                    needValue = true;
+                continue;
+            }
+
+            if (CoreManager.getInstance().isTask(item)) {
+                typeList.add(new TASK(CoreManager.getInstance().getTask(item)));
+                continue;
+            }
+
+            typeList.add(new NAME(item));
+//            if (operateState == STATE_DEFAULT) {
+
+//            } else {
+//                //处于运算
+//                NUM num = parseNumber(item);
+//                if (num != null) {
+//                    //是数字或变量
+//                    num = doCurOperation(num);
+//                }
+//                if (num != null) {
+//                    typeList.removeLast();
+//                    typeList.add(num);
+//                } else {
+//                    EngineHolder.getEngine().error("invalid operator syntax");
+//                }
+//                operateState = STATE_DEFAULT;
+//            }
+
         }
+
+        finishCalculate();
         checkFinishAssigning();
         typeList.add(new ENDMARK());
+    }
+
+    private CALCMARK parseCalcMark(String text) {
+        if (text.contains("+")) {
+            return new ADD();
+        } else if (text.contains("-")) {
+            return new MINUS();
+        } else if (text.contains("*")) {
+            return new MULTIPLY();
+        } else if (text.contains("/")) {
+            return new DIVIDE();
+        }
+        return null;
+    }
+
+    private void checkCalculateNum(TYPE type) {
+        if (type instanceof NUM || type instanceof BRACKET) {
+            if (calcList.size() == 0 || calcList.getLast() instanceof CALCMARK) {
+                calcList.add(type);
+            } else {
+                NUM num = new Calculator(field).calculate(calcList);
+                calcList.clear();
+                if (num != null) {
+                    typeList.add(num);
+                    checkFinishAssigning();
+                }
+                calcList.add(type);
+            }
+        } else {
+            EngineHolder.getEngine().error("syntax error");
+        }
+    }
+
+    private void finishCalculate() {
+        NUM num = new Calculator(field).calculate(calcList);
+        calcList.clear();
+        if (num != null) {
+            typeList.add(num);
+            checkFinishAssigning();
+        }
+    }
+
+    private void checkCalculateMark(CALCMARK calcmark) {
+        if (calcList.size() == 0) {
+            calcList.add(new NUM(0));
+            calcList.add(calcmark);
+//            EngineHolder.getEngine().error("syntax error");
+            return;
+        }
+        if (calcList.getLast() instanceof NUM || calcList.getLast() instanceof BRACKET) {
+            calcList.add(calcmark);
+            return;
+        }
+        EngineHolder.getEngine().error("syntax error");
     }
 
     private void checkFinishAssigning() {
