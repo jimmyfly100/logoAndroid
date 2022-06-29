@@ -17,6 +17,10 @@ REPEAT（重复）
 如：
 REPEAT 4[FD 100 RT 90] 绘制一个边长100的正方形
 
+### 支持四则运算
+如：
+(3+5)*8
+
 ### 支持定义变量(只支持double，即数字变量)
 如：
 A = 5 B = 90 REPEAT 100[FD A+5 RT 90 A=A+5] 绘制一个螺旋迷宫状图案 
@@ -33,5 +37,3 @@ TO STAR :length REPEAT 5[FD length RT 144] END REPEAT 4[FD 100 RT 90] STAR 400 �
 
 ### 支持函数保存本地/从本地读取
 
-todo: 
-运算目前只支持从左算到右，不支持小括号以及乘除优先于加减这些
