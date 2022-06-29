@@ -10,4 +10,19 @@ public class DefaultCanvas implements ICanvas{
     public void drawTurtle(float x, float y, float angle) {
 
     }
+
+    @Override
+    public float getDefaultX() {
+        return 0;
+    }
+
+    @Override
+    public float getDefaultY() {
+        return 0;
+    }
+
+    @Override
+    public float getDefaultAngle() {
+        return 0;
+    }
 }

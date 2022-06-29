@@ -22,10 +22,10 @@ public class AndroidEngine implements ILogoEngine {
 //        this.canvas = canvas;
 //    }
 
-    public AndroidEngine(float x, float y, float angle, ICanvas canvas) {
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
+    public AndroidEngine(ICanvas canvas) {
+        this.x = canvas.getDefaultX();
+        this.y = canvas.getDefaultY();
+        this.angle = canvas.getDefaultAngle();
         this.canvas = canvas;
         drawTurtle();
     }

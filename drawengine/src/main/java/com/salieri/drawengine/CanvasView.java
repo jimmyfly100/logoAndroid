@@ -77,7 +77,7 @@ public class CanvasView extends View implements ICanvas{
         turtleCanvas = new Canvas(turtleBmp);
 
 
-        EngineHolder.get().setEngine(new AndroidEngine(viewWidth / 2f, viewHeight / 2f, 0, this));
+        EngineHolder.get().setEngine(new AndroidEngine(this));
     }
 
     @Override
@@ -116,6 +116,21 @@ public class CanvasView extends View implements ICanvas{
         cv.drawBitmap(bitmap, 0, 0, paint);
         if (imageView != null && bitmap != null) imageView.setImage(ImageSource.bitmap(bp));
 
+    }
+
+    @Override
+    public float getDefaultX() {
+        return 0;
+    }
+
+    @Override
+    public float getDefaultY() {
+        return 0;
+    }
+
+    @Override
+    public float getDefaultAngle() {
+        return 0;
     }
 
 }

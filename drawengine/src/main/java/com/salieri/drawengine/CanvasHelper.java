@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -56,9 +57,6 @@ public class CanvasHelper implements ICanvas{
 
         turtleBmp = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
         turtleCanvas = new Canvas(turtleBmp);
-
-
-        EngineHolder.get().setEngine(new AndroidEngine(WIDTH / 2f, HEIGHT / 2f, 0, this));
     }
 
     @Override
@@ -100,6 +98,21 @@ public class CanvasHelper implements ICanvas{
 
     }
 
+    @Override
+    public float getDefaultX() {
+        return WIDTH / 2f;
+    }
+
+    @Override
+    public float getDefaultY() {
+        return HEIGHT / 2f;
+    }
+
+    @Override
+    public float getDefaultAngle() {
+        return 0;
+    }
+
     public void draw() {
         scale = imageView.getScale();
         center = imageView.getCenter();
@@ -111,6 +124,7 @@ public class CanvasHelper implements ICanvas{
         imageView.setImage(ImageSource.bitmap(bp));
         if (!init) {
             init = true;
+            Log.d("salieriiii", "init");
             imageView.setScaleAndCenter(1, new PointF(WIDTH / 2f, HEIGHT / 2f));
         } else {
             imageView.setScaleAndCenter(scale, center);

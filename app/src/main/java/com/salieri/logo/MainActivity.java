@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 //    private CanvasView canvasView;
     private SubsamplingScaleImageView imageView;
     private EditText codeTv;
-    private CanvasHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +42,7 @@ public class MainActivity extends AppCompatActivity {
         String text6 = "length= -(1+4)*100 TO STAR :length REPEAT 5[test 50-100 fd (length+100)*0.6 RT 144] END TO test :length REPEAT 4[FD length RT 90] END STAR length";
         String text7 = "repeat 10000[fd 1 rt 1 fd 1 rt 1 fd 1 rt 1]";
         codeTv.setText(text4);
-        helper = new CanvasHelper(imageView);
-
-//        String codeStr = "REPEAT C[FD A RT B]";
-//        List<NAME> paramList = new LinkedList<>();
-//        paramList.add(new NAME("A"));
-//        paramList.add(new NAME("B"));
-//        paramList.add(new NAME("C"));
-//        FUNC.Content content = new FUNC.Content(new CODE(codeStr), paramList);
-//        CoreManager.getInstance().registerFunc("SALIERI", content);
-
-//        String codeStr2 = "FD A RT B BK C";
-//        List<NAME> paramList2 = new LinkedList<>();
-//        paramList2.add(new NAME("A"));
-//        paramList2.add(new NAME("B"));
-//        paramList2.add(new NAME("C"));
-//        FUNC.Content content2 = new FUNC.Content(new CODE(codeStr2), paramList2);
-//        CoreManager.getInstance().registerFunc("AAAAA", content2);
+        EngineHolder.get().setEngine(new AndroidEngine(new CanvasHelper(imageView)));
 
         findViewById(R.id.button).setOnClickListener(v -> {
             CoreManager.getInstance().init();
