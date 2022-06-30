@@ -18,6 +18,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +27,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".workspace.WorkspaceActivity"
+        <activity android:name=".workspace.FunctionActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".workspace.MenuActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".workspace.VariableActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".workspace.ExampleActivity"
             android:screenOrientation="portrait"/>
     </application>
 

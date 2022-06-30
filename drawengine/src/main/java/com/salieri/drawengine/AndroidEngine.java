@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.salieri.baselib.core.CoreManager;
 import com.salieri.baselib.core.ILogoEngine;
-import com.salieri.baselib.task.logotask.FUNC;
+import com.salieri.baselib.task.FUNC;
 import com.salieri.baselib.type.NUM;
 import com.salieri.baselib.utils.BaseUtil;
 import com.salieri.baselib.utils.PrefFuncUtil;
@@ -17,6 +17,7 @@ public class AndroidEngine implements ILogoEngine {
     private double y = 0;
     private double angle = 0;
     private ICanvas canvas = new DefaultCanvas();
+    private boolean needDraw = true;
 
 //    public AndroidEngine(ICanvas canvas) {
 //        this.canvas = canvas;
@@ -57,7 +58,7 @@ public class AndroidEngine implements ILogoEngine {
         double lastY = y;
         y -= value.value * Math.cos(angle);
         x += value.value * Math.sin(angle);
-        canvas.drawLine((float) lastX, (float) lastY, (float) x, (float) y);
+        if (needDraw) canvas.drawLine((float) lastX, (float) lastY, (float) x, (float) y);
         print("FD");
     }
 
@@ -67,7 +68,7 @@ public class AndroidEngine implements ILogoEngine {
         double lastY = y;
         y += value.value * Math.cos(angle);
         x -= value.value * Math.sin(angle);
-        canvas.drawLine((float) lastX, (float) lastY, (float) x, (float) y);
+        if (needDraw) canvas.drawLine((float) lastX, (float) lastY, (float) x, (float) y);
         print("BK");
     }
 
@@ -86,6 +87,16 @@ public class AndroidEngine implements ILogoEngine {
     @Override
     public void error(String msg) {
         ToastUtil.show(msg);
+    }
+
+    @Override
+    public void PU() {
+        needDraw = false;
+    }
+
+    @Override
+    public void PD() {
+        needDraw = true;
     }
 
 

@@ -1,19 +1,19 @@
 package com.salieri.baselib.core;
 
 import com.salieri.baselib.task.LogoTask;
-import com.salieri.baselib.task.TaskSet;
 import com.salieri.baselib.task.logotask.BK;
-import com.salieri.baselib.task.logotask.FUNC;
+import com.salieri.baselib.task.FUNC;
 import com.salieri.baselib.task.logotask.FD;
 import com.salieri.baselib.task.logotask.LT;
+import com.salieri.baselib.task.logotask.PD;
+import com.salieri.baselib.task.logotask.PU;
 import com.salieri.baselib.task.logotask.REPEAT;
 import com.salieri.baselib.task.logotask.RT;
-import com.salieri.baselib.type.CODE;
 import com.salieri.baselib.type.NUM;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,7 +21,7 @@ public class CoreManager {
     public static final String MAIN_FIELD = " _MAIN_ ";
     private Set<Class<? extends LogoTask>> taskList = new HashSet<>();
     private Map<String, FUNC.Content> funcMap = new HashMap<>();
-    private Map<String, Map<String, NUM>> funcVarMap = new HashMap<>();
+    private Map<String, Map<String, NUM>> funcVarMap = new LinkedHashMap<>();
     private static CoreManager instance = new CoreManager();
     private Map<String, NUM> mainVarMap = new HashMap<>();
     private CoreManager(){
@@ -31,6 +31,8 @@ public class CoreManager {
         taskList.add(LT.class);
 //        taskList.add(FUNC.class);
         taskList.add(REPEAT.class);
+        taskList.add(PU.class);
+        taskList.add(PD.class);
         funcVarMap.put(MAIN_FIELD, mainVarMap);
     }
 
@@ -109,5 +111,9 @@ public class CoreManager {
 
     public Map<String, FUNC.Content> getFuncMap() {
         return funcMap;
+    }
+
+    public Map<String, Map<String, NUM>> getFuncVarMap() {
+        return funcVarMap;
     }
 }

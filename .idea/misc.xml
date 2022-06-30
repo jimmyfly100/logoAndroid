@@ -3,9 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/sel_30d395_corner20.xml" value="0.12" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.39292500813802084" />
+        <entry key="app/src/main/res/layout/example_activity.xml" value="0.16979166666666667" />
+        <entry key="app/src/main/res/layout/example_item_view.xml" value="0.4295942720763723" />
         <entry key="app/src/main/res/layout/func_item_view.xml" value="0.5107686360677084" />
+        <entry key="app/src/main/res/layout/menu_activity.xml" value="0.4176172892252604" />
         <entry key="app/src/main/res/layout/second_activity.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/variable_activity.xml" value="0.37735849056603776" />
+        <entry key="app/src/main/res/layout/variable_item_view.xml" value="0.3854389721627409" />
         <entry key="app/src/main/res/layout/workspace_activity.xml" value="0.33519553072625696" />
       </map>
     </option>

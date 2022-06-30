@@ -1,5 +1,6 @@
 package com.salieri.logo.workspace;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.salieri.baselib.core.CoreManager;
-import com.salieri.baselib.task.logotask.FUNC;
+import com.salieri.baselib.task.FUNC;
+import com.salieri.baselib.type.NAME;
 import com.salieri.logo.R;
 
 import java.util.LinkedList;
@@ -44,6 +46,12 @@ public class FuncAdapter extends RecyclerView.Adapter<FuncAdapter.ViewHolder>{
         holder.button.setVisibility(isFromDisk ? View.VISIBLE : View.GONE);
         holder.nameTv.setText(item.name);
         holder.codeTv.setText(item.content.code.value);
+        StringBuilder text = new StringBuilder();
+        for (NAME name : item.content.paramList) {
+            text.append(name.value).append("  ");
+        }
+        holder.paramTv.setText(text.toString());
+        holder.paramTv.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
         holder.button.setOnClickListener(v -> {
             CoreManager.getInstance().registerFunc(item.name, item.content);
             if (callback != null) callback.onRefresh();
@@ -59,11 +67,13 @@ public class FuncAdapter extends RecyclerView.Adapter<FuncAdapter.ViewHolder>{
         public TextView nameTv;
         public TextView codeTv;
         public TextView button;
+        public TextView paramTv;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTv = itemView.findViewById(R.id.name_tv);
             codeTv = itemView.findViewById(R.id.code_tv);
             button = itemView.findViewById(R.id.button);
+            paramTv = itemView.findViewById(R.id.param_tv);
         }
     }
 

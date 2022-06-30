@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.salieri.baselib.task.LogoTask;
 import com.salieri.baselib.task.TaskSet;
-import com.salieri.baselib.task.logotask.FUNC;
+import com.salieri.baselib.task.FUNC;
 import com.salieri.baselib.type.BRACKET;
 import com.salieri.baselib.type.CODE;
 import com.salieri.baselib.type.ENDMARK;

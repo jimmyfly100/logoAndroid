@@ -1,4 +1,4 @@
-package com.salieri.baselib.task.logotask;
+package com.salieri.baselib.task;
 
 import com.salieri.baselib.task.LogoTask;
 import com.salieri.baselib.core.CoreManager;

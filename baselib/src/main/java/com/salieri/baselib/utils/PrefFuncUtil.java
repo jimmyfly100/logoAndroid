@@ -5,12 +5,10 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.salieri.baselib.core.BaseApplication;
-import com.salieri.baselib.task.logotask.FUNC;
+import com.salieri.baselib.task.FUNC;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class PrefFuncUtil {
     private SharedPreferences sf;

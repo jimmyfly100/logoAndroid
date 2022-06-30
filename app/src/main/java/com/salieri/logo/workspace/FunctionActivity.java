@@ -12,7 +12,7 @@ import com.salieri.baselib.core.CoreManager;
 import com.salieri.baselib.utils.PrefFuncUtil;
 import com.salieri.logo.R;
 
-public class WorkspaceActivity extends AppCompatActivity implements FuncAdapter.Callback {
+public class FunctionActivity extends AppCompatActivity implements FuncAdapter.Callback {
 
     private RecyclerView curRv;
     private RecyclerView diskRv;
@@ -30,6 +30,10 @@ public class WorkspaceActivity extends AppCompatActivity implements FuncAdapter.
         diskRv.setLayoutManager(new LinearLayoutManager(this));
         curRv.setAdapter(curAdapter);
         diskRv.setAdapter(diskAdapter);
+
+        findViewById(R.id.back_iv).setOnClickListener(v -> {
+            finish();
+        });
         refresh();
     }
 
@@ -44,6 +48,6 @@ public class WorkspaceActivity extends AppCompatActivity implements FuncAdapter.
     }
 
     public static void go(Context context) {
-        context.startActivity(new Intent(context, WorkspaceActivity.class));
+        context.startActivity(new Intent(context, FunctionActivity.class));
     }
 }

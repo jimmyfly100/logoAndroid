@@ -6,35 +6,20 @@
     android:background="#dedee0"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:paddingBottom="8dp"
     android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="70dp"
         android:layout_marginStart="16dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="70dp"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            tools:text="Polygon"/>
-
-        <TextView
-            android:id="@+id/param_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:maxWidth="70dp"
-            android:textSize="12dp"
-            android:textColor="#999999"/>
-    </LinearLayout>
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        tools:text="Polygon"/>
 
 
     <TextView
@@ -48,7 +33,7 @@
         android:layout_marginStart="16dp"
         android:textColor="#333333"
         tools:text="Polygonsdsadawdoiajcoaisjcoiasjcoasinvoawinvoawnvaoinvaiosnvoiasnvzxkjzoicjziocjzoc"/>
-
+    
     <TextView
         android:id="@+id/button"
         android:layout_width="40dp"

@@ -42,6 +42,16 @@ public class DefaultEngine implements ILogoEngine {
     }
 
     @Override
+    public void PU() {
+
+    }
+
+    @Override
+    public void PD() {
+
+    }
+
+    @Override
     public void drawTurtle() {
 
     }
