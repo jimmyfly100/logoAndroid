@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        CoreManager.getInstance().init();
 //        canvasView = findViewById(R.id.canvas_view);
         imageView = findViewById(R.id.image);
         codeTv = findViewById(R.id.code_tv);
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         EngineHolder.get().setEngine(new AndroidEngine(new CanvasHelper(imageView)));
 
         findViewById(R.id.button).setOnClickListener(v -> {
-            CoreManager.getInstance().init();
             CODE code = new CODE(codeTv.getText().toString());
             MAIN main = new MAIN(code);
             main.run();

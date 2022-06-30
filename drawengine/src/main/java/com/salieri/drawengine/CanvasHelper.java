@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.salieri.baselib.core.EngineHolder;
+import com.salieri.baselib.utils.ThreadUtil;
 
 public class CanvasHelper implements ICanvas{
     private Canvas canvas;
@@ -114,21 +115,26 @@ public class CanvasHelper implements ICanvas{
     }
 
     public void draw() {
-        scale = imageView.getScale();
-        center = imageView.getCenter();
-        if (imageView == null || bitmap == null || turtleBmp == null) return;
-        Bitmap bp = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_4444);//设置位图的宽高
-        Canvas cv = new Canvas(bp);
-        cv.drawBitmap(bitmap, 0, 0, paint);
-        cv.drawBitmap(turtleBmp, 0, 0, paint);
-        imageView.setImage(ImageSource.bitmap(bp));
-        if (!init) {
-            init = true;
-            Log.d("salieriiii", "init");
-            imageView.setScaleAndCenter(1, new PointF(WIDTH / 2f, HEIGHT / 2f));
-        } else {
-            imageView.setScaleAndCenter(scale, center);
-        }
+        ThreadUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                scale = imageView.getScale();
+                center = imageView.getCenter();
+                if (imageView == null || bitmap == null || turtleBmp == null) return;
+                Bitmap bp = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_4444);//设置位图的宽高
+                Canvas cv = new Canvas(bp);
+                cv.drawBitmap(bitmap, 0, 0, paint);
+                cv.drawBitmap(turtleBmp, 0, 0, paint);
+                imageView.setImage(ImageSource.bitmap(bp));
+                if (!init) {
+                    init = true;
+                    Log.d("salieriiii", "init");
+                    imageView.setScaleAndCenter(1, new PointF(WIDTH / 2f, HEIGHT / 2f));
+                } else {
+                    imageView.setScaleAndCenter(scale, center);
+                }
+            }
+        });
     }
 
 }

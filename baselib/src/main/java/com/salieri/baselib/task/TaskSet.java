@@ -2,9 +2,11 @@ package com.salieri.baselib.task;
 
 import android.util.Log;
 
+import com.salieri.baselib.R;
 import com.salieri.baselib.core.CoreManager;
 import com.salieri.baselib.core.Decoder;
 import com.salieri.baselib.type.CODE;
+import com.salieri.baselib.utils.ThreadUtil;
 
 import java.util.Collections;
 import java.util.LinkedList;

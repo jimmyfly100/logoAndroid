@@ -19,10 +19,6 @@ public class AndroidEngine implements ILogoEngine {
     private ICanvas canvas = new DefaultCanvas();
     private boolean needDraw = true;
 
-//    public AndroidEngine(ICanvas canvas) {
-//        this.canvas = canvas;
-//    }
-
     public AndroidEngine(ICanvas canvas) {
         this.x = canvas.getDefaultX();
         this.y = canvas.getDefaultY();
@@ -60,6 +56,7 @@ public class AndroidEngine implements ILogoEngine {
         x += value.value * Math.sin(angle);
         if (needDraw) canvas.drawLine((float) lastX, (float) lastY, (float) x, (float) y);
         print("FD");
+//        if (value.value >= 299) Log.d("Salieri timestamp", "" + System.currentTimeMillis());
     }
 
     @Override
@@ -101,6 +98,6 @@ public class AndroidEngine implements ILogoEngine {
 
 
     private void print(String func) {
-        Log.d("LogoEngine", "Func " + func + " is called. Current state is: x = " + x + " y = " + y + " angle = " + angle);
+//        Log.d("LogoEngine", "Func " + func + " is called. Current state is: x = " + x + " y = " + y + " angle = " + angle);
     }
 }
