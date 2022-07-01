@@ -52,6 +52,26 @@ public class DefaultEngine implements ILogoEngine {
     }
 
     @Override
+    public void SETH(NUM value) {
+
+    }
+
+    @Override
+    public void SETXY(NUM value, NUM y) {
+
+    }
+
+    @Override
+    public void PPT() {
+
+    }
+
+    @Override
+    public void PX() {
+
+    }
+
+    @Override
     public void drawTurtle() {
 
     }

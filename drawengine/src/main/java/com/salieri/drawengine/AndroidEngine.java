@@ -96,6 +96,27 @@ public class AndroidEngine implements ILogoEngine {
         needDraw = true;
     }
 
+    @Override
+    public void SETH(NUM value) {
+        angle = BaseUtil.degree2Radius(value.value);
+    }
+
+    @Override
+    public void SETXY(NUM x, NUM y) {
+        this.x = canvas.getDefaultX() + x.value;
+        this.y = canvas.getDefaultY() + y.value;
+    }
+
+    @Override
+    public void PPT() {
+        canvas.setXfermodeNormal();
+    }
+
+    @Override
+    public void PX() {
+        canvas.setXfermodeXOR();
+    }
+
 
     private void print(String func) {
 //        Log.d("LogoEngine", "Func " + func + " is called. Current state is: x = " + x + " y = " + y + " angle = " + angle);

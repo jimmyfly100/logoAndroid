@@ -133,4 +133,14 @@ public class CanvasView extends View implements ICanvas{
         return 0;
     }
 
+    @Override
+    public void setXfermodeXOR() {
+
+    }
+
+    @Override
+    public void setXfermodeNormal() {
+
+    }
+
 }

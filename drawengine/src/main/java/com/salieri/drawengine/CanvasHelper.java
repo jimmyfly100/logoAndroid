@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -43,8 +44,8 @@ public class CanvasHelper implements ICanvas{
         paint = new Paint(Paint.DITHER_FLAG);
         bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        paint.setStyle(Paint.Style.STROKE);//设置非填充
-        paint.setStrokeWidth(5);//笔宽5像素
+        paint.setStyle(Paint.Style.FILL);//设置非填充
+        paint.setStrokeWidth(1);//笔宽5像素
         paint.setColor(Color.RED);//设置为红笔
         paint.setAntiAlias(true);//锯齿不显示
         paint.setDither(true);//设置图像抖动处理
@@ -112,6 +113,18 @@ public class CanvasHelper implements ICanvas{
     @Override
     public float getDefaultAngle() {
         return 0;
+    }
+
+    @Override
+    public void setXfermodeXOR() {
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
+        paint.setAntiAlias(false);
+    }
+
+    @Override
+    public void setXfermodeNormal() {
+        paint.setXfermode(null);
+        paint.setAntiAlias(true);
     }
 
     public void draw() {

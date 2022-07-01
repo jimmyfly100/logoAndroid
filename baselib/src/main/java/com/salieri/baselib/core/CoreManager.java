@@ -6,9 +6,13 @@ import com.salieri.baselib.task.FUNC;
 import com.salieri.baselib.task.logotask.FD;
 import com.salieri.baselib.task.logotask.LT;
 import com.salieri.baselib.task.logotask.PD;
+import com.salieri.baselib.task.logotask.PPT;
 import com.salieri.baselib.task.logotask.PU;
+import com.salieri.baselib.task.logotask.PX;
 import com.salieri.baselib.task.logotask.REPEAT;
 import com.salieri.baselib.task.logotask.RT;
+import com.salieri.baselib.task.logotask.SETH;
+import com.salieri.baselib.task.logotask.SETXY;
 import com.salieri.baselib.type.NUM;
 
 import java.util.HashMap;
@@ -33,6 +37,10 @@ public class CoreManager {
         taskList.add(REPEAT.class);
         taskList.add(PU.class);
         taskList.add(PD.class);
+        taskList.add(SETXY.class);
+        taskList.add(SETH.class);
+        taskList.add(PX.class);
+        taskList.add(PPT.class);
         funcVarMap.put(MAIN_FIELD, mainVarMap);
     }
 

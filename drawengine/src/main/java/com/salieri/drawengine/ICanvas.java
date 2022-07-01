@@ -6,4 +6,6 @@ public interface ICanvas {
     float getDefaultX();
     float getDefaultY();
     float getDefaultAngle();
+    void setXfermodeXOR();
+    void setXfermodeNormal();
 }

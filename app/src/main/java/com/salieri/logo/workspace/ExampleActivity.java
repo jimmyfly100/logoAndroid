@@ -47,6 +47,9 @@ public class ExampleActivity extends AppCompatActivity implements ExampleAdapter
 
         String multiFlowers = "TO flower :num REPEAT 8 [RT 45 REPEAT num [REPEAT 90 [FD 2 RT 2] RT 90]] end i = 1 PU BK 1000 REPEAT 7[flower i PU FD 300 i=i+1 PD]";
         itemList.add(new ExampleAdapter.ExampleItem("MultiFlowers", multiFlowers));
+
+        String chaos = "px i=0 repeat 420 [seth i repeat i [fd 2 rt 1] SETXY 0 0 i = i+1]";
+        itemList.add(new ExampleAdapter.ExampleItem("Chaos", chaos));
         adapter.refresh(itemList);
     }
 

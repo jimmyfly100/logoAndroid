@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         String text6 = "length= -(1+4)*100 TO STAR :length REPEAT 5[test 50-100 fd (length+100)*0.6 RT 144] END TO test :length REPEAT 4[FD length RT 90] END STAR length";
         String text7 = "repeat 10000[fd 1 rt 1 fd 1 rt 1 fd 1 rt 1]";
+        String text8 = "px i=0 repeat 420 [seth i repeat i [fd 2 rt 1] SETXY 0 0 i = i+1]";
+        String text9 = "px repeat 10000 [fd 200 rt 179]";
+        String text10 = "x=1 repeat 1000[fd x rt 90 x=x+1]";
         codeTv.setText(text3);
         EngineHolder.get().setEngine(new AndroidEngine(new CanvasHelper(imageView)));
 

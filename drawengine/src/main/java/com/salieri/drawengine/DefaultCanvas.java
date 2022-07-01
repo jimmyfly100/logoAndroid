@@ -25,4 +25,14 @@ public class DefaultCanvas implements ICanvas{
     public float getDefaultAngle() {
         return 0;
     }
+
+    @Override
+    public void setXfermodeXOR() {
+
+    }
+
+    @Override
+    public void setXfermodeNormal() {
+
+    }
 }
