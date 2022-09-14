@@ -40,6 +40,7 @@ TO STAR :length REPEAT 5[FD length RT 144] END STAR 400 //Define a pentagram fun
 
 ### Support saving funtions to disk/loading funcions from disk
 
+### Download and install logoAndroid_0.4.apk on your Android phone to use. 
 ### 在安卓平台上实现仿照Logo语言的画图编程。
 命令不区分大小写,以空格或换行控制语法，不支持逗号，分号等 
 
